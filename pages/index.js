@@ -1,82 +1,108 @@
-import Head from 'next/head'
+import Head from 'next/head';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import Fleet from '../components/fleet';
 
 export default function Home() {
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+	const [count, setCount] = useState({});
+	const { register, handleSubmit } = useForm();
+	const onSubmit = (data) => {
+		let ships = Number(data.ships);
 
-      <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-        <h1 className="text-6xl font-bold">
-          Welcome to{' '}
-          <a className="text-blue-600" href="https://nextjs.org">
-            Next.js!
-          </a>
-        </h1>
+		function generateMint() {
+			let r1 = 0;
+			let r2 = 0;
+			let r3 = 0;
+			let r4 = 0;
+			let r5 = 0;
 
-        <p className="mt-3 text-2xl">
-          Get started by editing{' '}
-          <code className="p-3 font-mono text-lg bg-gray-100 rounded-md">
-            pages/index.js
-          </code>
-        </p>
+			for (let i = 1; i < ships + 1; i++) {
+				let p = Math.random(1) * 100;
 
-        <div className="flex flex-wrap items-center justify-around max-w-4xl mt-6 sm:w-full">
-          <a
-            href="https://nextjs.org/docs"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Find in-depth information about Next.js features and API.
-            </p>
-          </a>
+				if (p <= 44) {
+					r1 = r1 + 1;
+				}
 
-          <a
-            href="https://nextjs.org/learn"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Learn &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Learn about Next.js in an interactive course with quizzes!
-            </p>
-          </a>
+				if (p > 44 && p <= 79) {
+					r2 = r2 + 1;
+				}
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Examples &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Discover and deploy boilerplate example Next.js projects.
-            </p>
-          </a>
+				if (p > 79 && p <= 94) {
+					r3 = r3 + 1;
+				}
 
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Deploy &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
+				if (p > 94 && p <= 99) {
+					r4 = r4 + 1;
+				}
+				if (p > 99) {
+					r5 = r5 + 1;
+				}
+			}
+			setCount({
+				R1: r1,
+				R2: r2,
+				R3: r3,
+				R4: r4,
+				R5: r5,
+			});
+		}
+		generateMint();
+	};
 
-      <footer className="flex items-center justify-center w-full h-24 border-t">
-        <a
-          className="flex items-center justify-center"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="h-4 ml-2" />
-        </a>
-      </footer>
-    </div>
-  )
+	return (
+		<div className="flex flex-col items-center justify-center min-h-screen py-2">
+			<Head>
+				<title>Welcome to Cryptomines Mints!!</title>
+				<link rel="icon" href="/favicon.ico" />
+			</Head>
+
+			<main className="flex flex-col justify-center flex-1 px-20 text-center">
+				{/* <form onSubmit={handleSubmit(onSubmit)}>
+					<div className="mb-4">
+						<label
+							className="block mb-2 text-sm font-bold text-gray-700"
+							htmlFor="username"
+						>
+							Numero de Naves
+						</label>
+						<input
+							className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+							id="ships"
+							type="text"
+							placeholder="Numero de naves"
+							{...register('ships')}
+						/>
+					</div>
+					<button
+						className="px-6 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-400"
+						onClick={(e) => handleSubmit(e)}
+					>
+						Enviar
+					</button>
+				</form>
+				<h1 className="mt-8 mb-2 text-2xl text-blue-600">Resultados</h1>
+				<div className="text-left ">
+					<p>Naves R1: {count.R1}</p>
+					<p>Naves R2: {count.R2}</p>
+					<p>Naves R3: {count.R3}</p>
+					<p>Naves R4: {count.R4}</p>
+					<p>Naves R5: {count.R5}</p>
+				</div> */}
+				<Fleet />
+			</main>
+
+			<footer className="flex flex-col items-center justify-center w-full h-24 border-t">
+				<div className="flex items-center gap-4">
+					<img src="/eternal.png" alt="eternal" className="w-8 h-8" />
+					<div className="text-center">
+						<h1>
+							Si te fue util se aceptan <strong>donativos</strong>
+						</h1>
+						<p>0x7FCb6aa57b435B2F0492545089F16Bb49844edd1</p>
+					</div>
+					<img src="/eternal.png" alt="eternal" className="w-8 h-8" />
+				</div>
+			</footer>
+		</div>
+	);
 }
